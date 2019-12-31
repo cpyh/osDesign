@@ -1,7 +1,8 @@
-package com.cpyh.Disk.service;
+package com.cpyh.Catalogue;
 
-import com.cpyh.Disk.pojo.Disk;
-import com.cpyh.Disk.pojo.FCB;
+import com.cpyh.Disk.Disk;
+import com.cpyh.Disk.ServiceDisk;
+import com.cpyh.Catalogue.FCB;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,10 +36,8 @@ public class FileManager {
     private String deleteUser(String nowUser,String name,Disk[]disks){
         if(nowUser.equals("root")){
             totalFiles.forEach((Stringkey,FCB)->{
-                String temp=deleteFiles(FCB.getFather().getName(),Stringkey,disks);//删除用户目录下所有的文件
-//                if(FCB.getFather().getName().equals(name)){//删除用户目录下所有的文件
-//                    totalFiles.remove(Stringkey);
-//                }
+                //删除用户目录下所有的文件,tempResult获取暂时的执行结果
+                String tempResult=deleteFiles(FCB.getFather().getName(),Stringkey,disks);
             });
             totalUser.remove(name);//删除MFD中的用户记录项
             return "over";

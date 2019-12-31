@@ -1,6 +1,4 @@
-package com.cpyh.Disk.service;
-
-import com.cpyh.Disk.pojo.Disk;
+package com.cpyh.Disk;
 
 import java.io.*;
 

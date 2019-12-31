@@ -1,4 +1,4 @@
-package com.cpyh.Disk.pojo;
+package com.cpyh.Catalogue;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.cpyh.Disk.pojo;
+package com.cpyh.Disk;
 
 public class Disk {
     private int name;//磁盘块编号

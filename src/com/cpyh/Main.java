@@ -1,6 +1,6 @@
 package com.cpyh;
 
-import com.cpyh.Disk.pojo.Disk;
+import com.cpyh.Disk.Disk;
 
 public class Main {
 
