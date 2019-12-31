@@ -1,13 +1,39 @@
 package com.cpyh.Disk.pojo;
 
-public class FCB {
+import java.util.HashMap;
+import java.util.Map;
+
+public class FCB {//FCB 既可以是文件也可以是用户，当为用户的时候，才会用到subMap即UFD，否则该结构不存在
+    public Map<String, FCB> subMap = new HashMap<String, FCB>();//UFD
     private String name;//文件名
     private String type;//文件类型
     private int attr;//用于识别是文件还是目录
     private int startNum;//在FAT表中起始位置
     private int size;//计划使用盘块数来代替
-    private FCB father = null;//上级目录
+    private FCB father = null;//上级目录，课设要求是二级目录，所以该上级目录就是MFD
 
+    public FCB(String name,String type,int startNum,int size){
+        this.name=name;
+        this.type=type;
+        this.attr=2;
+        this.startNum=startNum;
+        this.size=size;
+    }
+
+    public FCB(String name,int startNum){//创建用户
+        this.name=name;
+        this.attr=3;
+        this.startNum=startNum;
+        this.type=" ";
+        this.size=1;
+    }
+
+    public Map<String, FCB> getSubMap() {
+        return subMap;
+    }
+    public void setSubMap(Map<String, FCB> subMap) {
+        this.subMap = subMap;
+    }
     public String getName() {
         return name;
     }
