@@ -29,6 +29,19 @@ public class FCB {//FCB 既可以是文件也可以是用户，当为用户的�
         this.startNum=startNum;
         this.type=" ";
         this.size=1;
+        this.father=null;
+    }
+
+    @Override
+    public String toString() {
+        return "FCB{" +
+                "name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", attr=" + attr +
+                ", startNum=" + startNum +
+                ", size=" + size +
+                ", father=" + father +
+                '}';
     }
 
     public Map<String, FCB> getSubMap() {

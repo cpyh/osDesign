@@ -22,6 +22,7 @@ public class writeDataThread implements Runnable{
     private int size;
     private String Data;
     private String Filename;
+    private Map<String,FCB>totalUser;
     private Map<String, FCB> totalFiles;
     private Map<Integer, FreeDiskTable> DiskTables;
     private int Thread_id;
@@ -35,7 +36,7 @@ public class writeDataThread implements Runnable{
     public void run() {
         //直接调用
         ServiceDiskTable serviceDiskTable=new ServiceDiskTable();
-        serviceDiskTable.allocation(disks,nowUser,size,Data,Filename,totalFiles,DiskTables);
+        serviceDiskTable.allocation(disks,nowUser,size,Data,Filename,totalUser,totalFiles,DiskTables);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

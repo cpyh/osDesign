@@ -38,7 +38,7 @@ public class ServiceDiskTable {
     // 并调用目录管理功能为其在目录中建立目录项，更改空闲盘块信息。
     //这个函数可以进一步拆分成三个小的功能函数，晚点再搞
     public void allocation
-    (Disk[]disks,String nowUser,int size,String Data,String Filename,Map<String, FCB>totalFiles,Map<Integer,FreeDiskTable> DiskTables){
+    (Disk[]disks,String nowUser,int size,String Data,String Filename,Map<String, FCB>totalUser,Map<String, FCB>totalFiles,Map<Integer,FreeDiskTable> DiskTables){
         int tmpStartNum=0;
         for(Integer key:DiskTables.keySet()){
             FreeDiskTable freeDiskTable=DiskTables.get(key);
@@ -51,7 +51,7 @@ public class ServiceDiskTable {
             }
             //否则抛出没有足够空间
         }
-        fileManager.createFile(nowUser,Filename,"文件",tmpStartNum,size);
+        fileManager.createFile(nowUser,Filename,"文件",tmpStartNum,size,totalUser,totalFiles);
         //文件创建成功后，在该startNum开始处写数据
             ServiceDisk serviceDisk=new ServiceDisk();
             serviceDisk.writeData(tmpStartNum,Data,disks);
