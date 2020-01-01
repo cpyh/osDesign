@@ -1,8 +1,10 @@
 package com.cpyh.Catalogue;
 
 import com.cpyh.Disk.Disk;
+import com.cpyh.Disk.FreeDiskTable;
 import com.cpyh.Disk.ServiceDisk;
 import com.cpyh.Catalogue.FCB;
+import com.cpyh.Disk.ServiceDiskTable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +46,7 @@ public class FileManager {
         newFile.setFather(totalUser.get(nowUser));//最后再规整到方法里面吧。。有点乱
         totalFiles.put(Filename,newFile);
     }
-    public String deleteUser(String nowUser,String name,Disk[]disks,Map<String,FCB>totalFiles,Map<String,FCB>totalUser){
+    public String deleteUser(String nowUser,String name,Disk[]disks,Map<String,FCB>totalFiles,Map<String,FCB>totalUser,Map<Integer,FreeDiskTable>DiskTables){
         if(nowUser.equals("root")){
             totalFiles.forEach((Stringkey,fcb)->{
                 //删除用户目录下所有的文件,tempResult获取暂时的执行结果
@@ -56,10 +58,14 @@ public class FileManager {
         else
             return "error";
     }
-    public String deleteFiles(String nowUser, String Filename, Disk[]disks,Map<String,FCB>totalUser,Map<String,FCB>totalFiles){//需要先删除在磁盘中的数据项
+    public String deleteFiles(String nowUser, String Filename, Disk[]disks, Map<String,FCB>totalUser, Map<String,FCB>totalFiles ){//需要先删除在磁盘中的数据项
         FCB tmpFile=totalFiles.get(Filename);
         if(nowUser.equals(tmpFile.getFather().getName())){
+            //第一步，擦除数据
             serviceDisk.deleteData(tmpFile.getStartNum(),tmpFile.getStartNum()+tmpFile.getSize(),disks);
+            //第二步，更新空闲盘区表
+            //DiskTables=serviceDiskTable.Recovery(Filename,totalFiles,DiskTables);
+            //第三步，文件移出文件表
             totalFiles.remove(Filename);
             return "over";
         }else

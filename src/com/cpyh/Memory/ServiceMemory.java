@@ -59,8 +59,10 @@ public class ServiceMemory {
     }
 
     //展示内存中的信息
-    public void showMemory(){
-
+    public void showMemory(MmDisk[]mmdisks){
+        for(int i=0;i<16;i++){
+            System.out.println(mmdisks[i].toString());
+        }
     }
 
     //更新每个MmDisk的使用时间

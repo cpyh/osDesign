@@ -3,7 +3,9 @@ package com.cpyh.Thread;
 import com.cpyh.Catalogue.FCB;
 import com.cpyh.Disk.Disk;
 import com.cpyh.Disk.FreeDiskTable;
+import com.cpyh.Disk.ServiceDisk;
 import com.cpyh.Disk.ServiceDiskTable;
+import com.sun.xml.internal.bind.v2.runtime.SwaRefAdapter;
 
 import java.util.Map;
 
@@ -15,33 +17,40 @@ import java.util.Map;
 // 并调用目录管理功能为其在目录中建立目录项，更改空闲盘块信息。
 
 public class writeDataThread implements Runnable{
+    private ServiceDisk serviceDisk= new ServiceDisk();
     private Disk[]disks;
     private String nowUser;
-    private int startNum;
-    private int endNum;
+    //private int startNum;
     private int size;
     private String Data;
     private String Filename;
     private Map<String,FCB>totalUser;
-    private Map<String, FCB> totalFiles;
+    private Map<String,FCB> totalFiles;
     private Map<Integer, FreeDiskTable> DiskTables;
     private int Thread_id;
-    public writeDataThread(int Thread_id,Disk[]disks,int StartNum,int endNum){
+
+    public writeDataThread
+            (int Thread_id,Disk[]disks,
+             String nowUser, int size,String Data,String Filename,
+             Map<String,FCB>totalUser,Map<String,FCB> totalFiles,
+             Map<Integer, FreeDiskTable> DiskTables){
         this.Thread_id=Thread_id;
         this.disks=disks;
-        this.startNum=StartNum;
-        this.endNum=endNum;
+        this.nowUser=nowUser;
+        //this.startNum=StartNum;
+        this.size=size;
+        this.Data=Data;
+        this.Filename=Filename;
+        this.totalUser=totalUser;
+        this.totalFiles=totalFiles;
+        this.DiskTables=DiskTables;
     }
     @Override
     public void run() {
         //直接调用
         ServiceDiskTable serviceDiskTable=new ServiceDiskTable();
-        serviceDiskTable.allocation(disks,nowUser,size,Data,Filename,totalUser,totalFiles,DiskTables);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        //这个线程休眠应该放到执行线程去，或者把每个线程的各部分函数拆分，然后加入休眠
+
+        serviceDiskTable.allocation(nowUser,size,Filename,totalUser,totalFiles,DiskTables);
+        serviceDisk.writeData(totalFiles.get(Filename).getStartNum(),Data,disks);
     }
 }

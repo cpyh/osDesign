@@ -35,7 +35,7 @@ public class ServiceDisk {
     }
     //删除数据
     public void deleteData(int startNum,int endNum,Disk[]disks){
-        for(int i=startNum;i<=endNum;i++){
+        for(int i=startNum;i<endNum;i++){
             disks[i].setData(null);
             disks[i].setUsed(false);
         }
@@ -79,9 +79,28 @@ public class ServiceDisk {
             cnt++;
             if(cnt==4){
                 disks[tmpdiskNum].setData(tmpStr);
+                disks[tmpdiskNum].setUsed(true);
                 tmpdiskNum++;
                 tmpStr="";
+                cnt=0;
             }
+        }
+        if(cnt>0){
+            disks[tmpdiskNum].setData(tmpStr);
+            disks[tmpdiskNum].setUsed(true);
+        }
+    }
+
+    //展示磁盘信息
+    public void showDisk(Disk[]disks){
+        for(int i=0;i<32;i++){
+            for(int j=0;j<32;j++){
+                if(disks[i*32+j].isUsed())
+                    System.out.printf(""+disks[i*32+j].getData()+" ");
+                else
+                    System.out.printf("####"+" ");
+            }
+            System.out.println();
         }
     }
 }
