@@ -14,9 +14,7 @@ public class ServiceDisk {
         //需要考虑哪些部分是目录数据，哪些部分是文件数据，或者可以考虑文件数据不写到磁盘
         Disk [] disks=new Disk[1024];//一共定义1024个磁盘块
         for(int i=0;i<disks.length;i++){
-            disks[i].setName(i);
-            disks[i].setData(null);
-            disks[i].setUsed(false);
+            disks[i]=new Disk();
         }
         return disks;
         //问题：如何用一个4KB的文件来保存磁盘信息？ 方案：建立一个文件保存和读取
@@ -39,7 +37,7 @@ public class ServiceDisk {
     public void deleteData(int startNum,int endNum,Disk[]disks){
         for(int i=startNum;i<=endNum;i++){
             disks[i].setData(null);
-            disks[i].setUsed(true);
+            disks[i].setUsed(false);
         }
     }
 
@@ -58,7 +56,7 @@ public class ServiceDisk {
             e.printStackTrace();
         }
     }
-    //创建文件
+    //创建磁盘txt文件
     public static boolean createTxtFile(String name) throws IOException{
         boolean flag =false;
         String filenameTemp="D:/"+name+".txt";
@@ -68,5 +66,22 @@ public class ServiceDisk {
             flag=true;
         }
         return flag;
+    }
+
+    //创建文件的时候使用，将传入的数据，保存在模拟的磁盘块数组中,用户区
+    public void writeData(int StartNum,String Data,Disk[]disks){
+        String tmpStr="";
+        int cnt=0;
+        int tmpdiskNum=StartNum;
+        for(int i=0;i<Data.length();i++){
+            char tmp=Data.charAt(i);
+            tmpStr+=tmp;
+            cnt++;
+            if(cnt==4){
+                disks[tmpdiskNum].setData(tmpStr);
+                tmpdiskNum++;
+                tmpStr="";
+            }
+        }
     }
 }

@@ -7,9 +7,12 @@ import com.cpyh.Catalogue.FCB;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 文件相关的操作
+ */
 public class FileManager {
-    public Map<String,FCB> totalUser=new HashMap<String , FCB>();
-    public Map<String,FCB> totalFiles=new HashMap<String,FCB>();
+    public Map<String,FCB> totalUser=new HashMap<String , FCB>();//晚点调整到全局变量
+    public Map<String,FCB> totalFiles=new HashMap<String,FCB>();//晚点调整到全局变量
     ServiceDisk serviceDisk=new ServiceDisk();
     //连续组织方式,应该规整到初始化中去，暂时先放着
     private FCB root=new FCB("root",1);//定义一个根目录root，或者说初始用户root
@@ -26,12 +29,10 @@ public class FileManager {
             return "error";
         }
     }
-    private void createFile(String nowUser,String name,String type,int startNum,int size){
-        FCB newFile=new FCB(name,type,startNum,size);
-
+    public void createFile(String nowUser,String Filename,String type,int startNum,int size){
+        FCB newFile=new FCB(Filename,type,startNum,size);
         newFile.setFather(totalUser.get(nowUser));//最后再规整到方法里面吧。。有点乱
-
-        totalFiles.put(name,newFile);
+        totalFiles.put(Filename,newFile);
     }
     private String deleteUser(String nowUser,String name,Disk[]disks){
         if(nowUser.equals("root")){

@@ -1,6 +1,65 @@
 package com.cpyh.Memory;
 
-public class MmDisk {
-    private int id;
+import com.cpyh.Disk.Disk;
+
+public class MmDisk {//一共16个MemoryDisk
+    private static int id=-1;
     private String Data;
+    private String theFileName;
+    private int FileDiskId;
+    private int id_Thread;
+
+
+
+
+    public MmDisk(){
+        id++;
+        this.time=-1;
+        this.id_Thread=0;
+    }
+    public String getTheFileName() {
+        return theFileName;
+    }
+
+    public int getId_Thread() {
+        return id_Thread;
+    }
+
+    public void setId_Thread(int id_Thread) {
+        this.id_Thread = id_Thread;
+    }
+
+    public void setTheFileName(String theFileName) {
+        this.theFileName = theFileName;
+    }
+
+    public int getFileDiskId() {
+        return FileDiskId;
+    }
+
+    public void setFileDiskId(int fileDiskId) {
+        FileDiskId = fileDiskId;
+    }
+
+    private int time;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getData() {
+        return Data;
+    }
+
+    public void setData(String data) {
+        Data = data;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
 }

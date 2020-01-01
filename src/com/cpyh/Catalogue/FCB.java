@@ -3,6 +3,9 @@ package com.cpyh.Catalogue;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 文件的目录项为FCB，使用subMap文件保存所有的目录项，作为一个目录哈希表
+ */
 public class FCB {//FCB 既可以是文件也可以是用户，当为用户的时候，才会用到subMap即UFD，否则该结构不存在
     public Map<String, FCB> subMap = new HashMap<String, FCB>();//UFD
     private String name;//文件名
