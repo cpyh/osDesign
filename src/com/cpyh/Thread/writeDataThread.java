@@ -36,5 +36,11 @@ public class writeDataThread implements Runnable{
         //直接调用
         ServiceDiskTable serviceDiskTable=new ServiceDiskTable();
         serviceDiskTable.allocation(disks,nowUser,size,Data,Filename,totalFiles,DiskTables);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //这个线程休眠应该放到执行线程去，或者把每个线程的各部分函数拆分，然后加入休眠
     }
 }
