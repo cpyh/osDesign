@@ -8,14 +8,18 @@ import com.cpyh.Memory.ServiceMemory;
 import java.util.Map;
 
 public class ExecuteThread implements Runnable{
+    ServiceMemory serviceMemory=new ServiceMemory();
     private Disk[]disks;
     private MmDisk[]mmdisks;
     private String Filename;
     private Map<String, FCB>totalFiles;
     private int Thread_id;
-    public ExecuteThread(int Thread_id,Disk[]disks,int StartNum,int endNum){
+    public ExecuteThread(int Thread_id,MmDisk[] mmdisks,Disk[]disks,String Filename,Map<String,FCB>totalFiles){
         this.Thread_id=Thread_id;
+        this.mmdisks=mmdisks;
         this.disks=disks;
+        this.Filename=Filename;
+        this.totalFiles=totalFiles;
     }
     @Override
     public void run() {
@@ -26,12 +30,18 @@ public class ExecuteThread implements Runnable{
         // 此间如果4块内存不够存放文件信息，需要进行换页（选择的换页策略见分组要求），  FIFO策略，全局置换
         // 换出的页面存放到磁盘兑换区。  丢过去完事了，不改了
         // 允许同时运行多个执行线程。文件数据在内存块的分布通过线程的页表（模拟）进行记录。  暂时不会
-        ServiceMemory serviceMemory=new ServiceMemory();
         FCB tmpFCB=totalFiles.get(Filename);
-        int tmpStartNum=tmpFCB.getStartNum();
+        //int tmpStartNum=tmpFCB.getStartNum();
         int tmpdoneNumber=0;
         while(tmpdoneNumber<tmpFCB.getSize()) {
-            serviceMemory.allocationMemoryOnce(Thread_id, mmdisks, disks, tmpFCB, 0);
+            //申请内存块
+            serviceMemory.allocationMemoryOnce(Thread_id, mmdisks, disks, tmpFCB, tmpdoneNumber);
+            //查看内存块状态
+            for(int i=0;i<16;i++){
+                System.out.println(mmdisks[i].toString());
+            }
+            System.out.println();
+            tmpdoneNumber++;
         }
     }
 }

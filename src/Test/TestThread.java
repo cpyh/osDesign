@@ -6,8 +6,11 @@ import com.cpyh.Disk.Disk;
 import com.cpyh.Disk.FreeDiskTable;
 import com.cpyh.Disk.ServiceDisk;
 import com.cpyh.Disk.ServiceDiskTable;
+import com.cpyh.Memory.MmDisk;
+import com.cpyh.Memory.ServiceMemory;
 import com.cpyh.Service.Login;
 import com.cpyh.Thread.DeleteDataThread;
+import com.cpyh.Thread.ExecuteThread;
 import com.cpyh.Thread.writeDataThread;
 import org.junit.Test;
 
@@ -18,6 +21,7 @@ public class TestThread {
     FileManager fileManager=new FileManager();
     ServiceDiskTable serviceDiskTable=new ServiceDiskTable();
     ServiceDisk serviceDisk=new ServiceDisk();
+    ServiceMemory serviceMemory = new ServiceMemory();
     //初始化磁盘块
     private Disk[] initDisk(){
         Disk[] disks=new Disk[1024];
@@ -91,6 +95,9 @@ public class TestThread {
                             +freeDiskTable.getStartNum()
                             +"=========="+endNum);
         });
+        //测试执行进程
+        MmDisk[]mmdisks=serviceMemory.initMemory();
+        new ExecuteThread(1,mmdisks,disks,"Test1",totalFiles).run();
         //查看内存状态
         //查看磁盘数据
         //serviceDisk.showDisk(disks);

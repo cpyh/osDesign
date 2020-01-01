@@ -10,7 +10,16 @@ public class MmDisk {//一共16个MemoryDisk
     private int id_Thread;
 
 
-
+    @Override
+    public String toString() {
+        return "MmDisk{" +
+                "Data='" + Data + '\'' +
+                ", theFileName='" + theFileName + '\'' +
+                ", FileDiskId=" + FileDiskId +
+                ", id_Thread=" + id_Thread +
+                ", time=" + time +
+                '}';
+    }
 
     public MmDisk(){
         id++;
