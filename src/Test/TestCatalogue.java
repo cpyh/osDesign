@@ -39,7 +39,7 @@ public class TestCatalogue {
         Map<String, FCB> totalUser=fileManager.InitTotalUser();
         Map<String,FCB> totalFiles=fileManager.InitTotalFiles();
         String nowUser="root";
-        fileManager.createFile(nowUser,"test1","文件",10,20,totalUser,totalFiles);
+        fileManager.createFile(nowUser,"test1","文件",30,20,totalUser,totalFiles);
         System.out.println(totalFiles.size());
         totalFiles.forEach((stringkey,valueFCB)->{
             System.out.println(stringkey+" "+valueFCB.toString());

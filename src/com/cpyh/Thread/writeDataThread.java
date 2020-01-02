@@ -5,6 +5,7 @@ import com.cpyh.Disk.Disk;
 import com.cpyh.Disk.FreeDiskTable;
 import com.cpyh.Disk.ServiceDisk;
 import com.cpyh.Disk.ServiceDiskTable;
+import com.cpyh.Service.Show;
 import com.sun.xml.internal.bind.v2.runtime.SwaRefAdapter;
 
 import java.util.Map;
@@ -45,12 +46,32 @@ public class writeDataThread implements Runnable{
         this.totalFiles=totalFiles;
         this.DiskTables=DiskTables;
     }
+
+    public Disk[] getDisks() {
+        return disks;
+    }
+
+    public Map<String, FCB> getTotalUser() {
+        return totalUser;
+    }
+
+    public Map<String, FCB> getTotalFiles() {
+        return totalFiles;
+    }
+
+    public Map<Integer, FreeDiskTable> getDiskTables() {
+        return DiskTables;
+    }
+
     @Override
     public void run() {
         //直接调用
         ServiceDiskTable serviceDiskTable=new ServiceDiskTable();
-
+        Show show = new Show();
         serviceDiskTable.allocation(nowUser,size,Filename,totalUser,totalFiles,DiskTables);
         serviceDisk.writeData(totalFiles.get(Filename).getStartNum(),Data,disks);
+        show.showFilesofnowUser(nowUser,totalFiles);
+        System.out.println("\t写入数据后的空闲区表");
+        show.showDiskTable(DiskTables);
     }
 }

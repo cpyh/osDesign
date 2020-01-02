@@ -15,6 +15,7 @@ import com.cpyh.Thread.writeDataThread;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 public class TestThread {
@@ -61,12 +62,12 @@ public class TestThread {
         Map<Integer,FreeDiskTable>SwapDiskTable=SwapDiskTable();
         Map<Integer,FreeDiskTable>UserDiskTable=UserDiskTable();
         String nowUser=new Login("root").getNowUser();
-        writeDataThread testThread1=new writeDataThread(0,disks,nowUser,2,"abcdefgh","Test1",totalUser,totalFiles,UserDiskTable);
+        writeDataThread testThread1=new writeDataThread(0,disks,nowUser,8,"abcdefgh","Test1",totalUser,totalFiles,UserDiskTable);
         testThread1.run();
 
-        writeDataThread testThread2=new writeDataThread(0,disks,nowUser,2,"abcdefgh","Test2",totalUser,totalFiles,UserDiskTable);
+        writeDataThread testThread2=new writeDataThread(0,disks,nowUser,8,"abcdefgh","Test2",totalUser,totalFiles,UserDiskTable);
         testThread2.run();
-        writeDataThread testThread3=new writeDataThread(0,disks,nowUser,2,"abcdefgh","Test3",totalUser,totalFiles,UserDiskTable);
+        writeDataThread testThread3=new writeDataThread(0,disks,nowUser,8,"abcdefgh","Test3",totalUser,totalFiles,UserDiskTable);
         testThread3.run();
 
         DeleteDataThread testdelThread1=new DeleteDataThread(0,disks,nowUser,"Test2",totalUser,totalFiles,UserDiskTable);
@@ -97,7 +98,8 @@ public class TestThread {
         });
         //测试执行进程
         MmDisk[]mmdisks=serviceMemory.initMemory();
-        new ExecuteThread(1,mmdisks,disks,"Test1",totalFiles).run();
+        Map<Integer,String> ThreadMap=new HashMap<>();
+        new ExecuteThread(1,mmdisks,disks,"Test1",totalFiles,ThreadMap).run();
         //查看内存状态
         //查看磁盘数据
         serviceDisk.showDisk(disks);

@@ -6,6 +6,7 @@ import com.cpyh.Disk.Disk;
 import com.cpyh.Disk.FreeDiskTable;
 import com.cpyh.Disk.ServiceDisk;
 import com.cpyh.Disk.ServiceDiskTable;
+import com.cpyh.Service.Show;
 
 import java.util.Map;
 
@@ -13,6 +14,7 @@ public class DeleteDataThread implements Runnable{
     private ServiceDisk serviceDisk= new ServiceDisk();
     private ServiceDiskTable serviceDiskTable=new ServiceDiskTable();
     private FileManager fileManager=new FileManager();
+    private Show show=new Show();
     private Disk[]disks;
     private String nowUser;
     //private int startNum;
@@ -46,6 +48,8 @@ public class DeleteDataThread implements Runnable{
     public void run() {
         DiskTables=serviceDiskTable.recovery(Filename,totalFiles,DiskTables);//更新空闲盘块信息
         fileManager.deleteFiles(nowUser,Filename,disks,totalUser,totalFiles);
+        System.out.println("\t删除文件数据后的空闲区表");
+        show.showDiskTable(DiskTables);
     }
     public Map<Integer, FreeDiskTable> getDiskTables(){
         return DiskTables;

@@ -12,15 +12,27 @@ public class ExecuteThread implements Runnable{
     private Disk[]disks;
     private MmDisk[]mmdisks;
     private String Filename;
-    private Map<String, FCB>totalFiles;
+    private Map<String,FCB>totalFiles;
     private int Thread_id;
-    public ExecuteThread(int Thread_id,MmDisk[] mmdisks,Disk[]disks,String Filename,Map<String,FCB>totalFiles){
+    private String Thread_name;
+    private Map<Integer,String> ThreadMap;
+    public ExecuteThread(int Thread_id,MmDisk[] mmdisks,Disk[]disks,String Filename,Map<String,FCB>totalFiles,Map<Integer,String>ThreadMap){
         this.Thread_id=Thread_id;
         this.mmdisks=mmdisks;
         this.disks=disks;
         this.Filename=Filename;
         this.totalFiles=totalFiles;
+        this.Thread_name="Thread"+Thread_id;
+        this.ThreadMap=ThreadMap;
     }
+
+    public String getThread_name() {
+        return Thread_name;
+    }
+    public Map<Integer,String> getThreadMap(){
+        return ThreadMap;
+    }
+
     @Override
     public void run() {
         //选择目录中的文件，执行线程将文件数据从外存调入内存， Filename
@@ -33,15 +45,21 @@ public class ExecuteThread implements Runnable{
         FCB tmpFCB=totalFiles.get(Filename);
         //int tmpStartNum=tmpFCB.getStartNum();
         int tmpdoneNumber=0;
+        System.out.println("\t文件总共需要"+tmpFCB.getSize()+"块内存");
         while(tmpdoneNumber<tmpFCB.getSize()) {
+            int blockNumber=tmpdoneNumber+1;
+            System.out.println("\t正在请求第"+blockNumber+"块内存");
             //申请内存块
-            serviceMemory.allocationMemoryOnce(Thread_id, mmdisks, disks, tmpFCB, tmpdoneNumber);
+            serviceMemory.allocationMemoryOnce(Thread_id, mmdisks, disks, tmpFCB, tmpdoneNumber,ThreadMap);
             //查看内存块状态
+            System.out.println("\t请求后内存状态");
             for(int i=0;i<16;i++){
                 System.out.println(mmdisks[i].toString());
             }
             System.out.println();
             tmpdoneNumber++;
+            serviceMemory.updateMmTime(mmdisks);
         }
+        //serviceMemory.reMemory(Thread_id,mmdisks);
     }
 }

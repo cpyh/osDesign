@@ -40,6 +40,11 @@ public class ServiceDiskTable {
     public void allocation
     (String nowUser,int size,String Filename,Map<String, FCB>totalUser,Map<String, FCB>totalFiles,Map<Integer,FreeDiskTable> DiskTables){
         int tmpStartNum=0;
+        int tmp = size%4;
+        if(tmp!=0){
+            size=size/4+1;
+        }else
+            size=size/4;
         for(Integer key:DiskTables.keySet()){
             FreeDiskTable freeDiskTable=DiskTables.get(key);
             if(freeDiskTable.getSize()>size) {

@@ -1,5 +1,7 @@
 package com.cpyh.Catalogue;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ public class FCB {//FCB 既可以是文件也可以是用户，当为用户的�
     private int startNum;//在磁盘表中起始位置，
     private int size;//计划使用盘块数来代替
     private FCB father = null;//上级目录，课设要求是二级目录，所以该上级目录就是MFD
+    private String date;
 
     public FCB(String name,String type,int startNum,int size){
         this.name=name;
@@ -21,6 +24,9 @@ public class FCB {//FCB 既可以是文件也可以是用户，当为用户的�
         this.attr=2;
         this.startNum=startNum;
         this.size=size;
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.date=df.format(new Date());
+
     }
 
     public FCB(String name,int startNum){//创建用户
@@ -30,6 +36,8 @@ public class FCB {//FCB 既可以是文件也可以是用户，当为用户的�
         this.type=" ";
         this.size=1;
         this.father=null;
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.date=df.format(new Date());
     }
 
     @Override
@@ -50,6 +58,15 @@ public class FCB {//FCB 既可以是文件也可以是用户，当为用户的�
     //public void setSubMap(Map<String, FCB> subMap) {
     //    this.subMap = subMap;
     //}
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getName() {
         return name;
     }
