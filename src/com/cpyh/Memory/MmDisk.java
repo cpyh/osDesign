@@ -8,6 +8,7 @@ public class MmDisk {//一共16个MemoryDisk
     private String theFileName;
     private int FileDiskId;
     private int id_Thread;
+    private int time;
 
 
     @Override
@@ -49,8 +50,6 @@ public class MmDisk {//一共16个MemoryDisk
     public void setFileDiskId(int fileDiskId) {
         FileDiskId = fileDiskId;
     }
-
-    private int time;
 
     public int getId() {
         return id;

@@ -11,7 +11,7 @@ public class ServiceMemory {
         for (int i=0;i<mmdisks.length;i++) {//初始化16个内存块，由于是全局置换，所以不考虑分区问题。
             mmdisks[i]=new MmDisk();
             mmdisks[i].setTheFileName(null);
-            mmdisks[i].setTheFileName(null);
+            //mmdisks[i].setTheFileName(null);
             mmdisks[i].setFileDiskId(-1);
         }
         return mmdisks;
@@ -42,6 +42,7 @@ public class ServiceMemory {
             }
             mmdisks[tmpMmDisk.getId()].setTime(0);
             mmdisks[tmpMmDisk.getId()].setId_Thread(Thread_ID);
+            //这个内存块调到对换区
             for(int i=0;i<124;i++){
                 if(!disks[i].isUsed()){
                     disks[i].setData(tmpMmDisk.getData());
@@ -53,8 +54,10 @@ public class ServiceMemory {
     //线程结束时候 回收内存块
     public void reMemory(int ThreadNumber,MmDisk[]mmdisks){
         for(int i=0;i<16;i++){
-            mmdisks[i].setId_Thread(0);
-            mmdisks[i].setTime(0);//将使用时间重置为0
+            if(mmdisks[i].getId_Thread()==ThreadNumber){
+                mmdisks[i].setId_Thread(0);
+                mmdisks[i].setTime(-1);//将使用时间重置为0
+            }
         }
     }
 

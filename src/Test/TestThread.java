@@ -100,6 +100,6 @@ public class TestThread {
         new ExecuteThread(1,mmdisks,disks,"Test1",totalFiles).run();
         //查看内存状态
         //查看磁盘数据
-        //serviceDisk.showDisk(disks);
+        serviceDisk.showDisk(disks);
     }
 }
