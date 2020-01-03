@@ -156,10 +156,4 @@ public class ServiceDiskTable {
         return sortMap;
     }
 
-    //重新写一个回收的函数
-    public Map<Integer,FreeDiskTable> Recovery(String Filename,Map<String,FCB>totalFiles,Map<Integer,FreeDiskTable>DiskTables){
-        FreeDiskTable tmpFre = new FreeDiskTable(totalFiles.get(Filename).getStartNum(),totalFiles.get(Filename).getSize(),DiskTables.size()+1);
-        DiskTables.put(tmpFre.getId(),tmpFre);
-        return DiskTables;
-    }
 }

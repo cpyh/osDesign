@@ -4,11 +4,11 @@ import com.cpyh.Disk.Disk;
 
 public class MmDisk {//一共16个MemoryDisk
     private static int id=-1;
-    private String Data;
-    private String theFileName;
-    private int FileDiskId;
-    private int id_Thread;
-    private int time;
+    private String Data;//该内存块保存的数据
+    private String theFileName;//占用该内存块的文件
+    private int FileDiskId;//该内存块的数据对应的磁盘块的地址
+    private int id_Thread;//占用该内存块的线程id
+    private int time;//该内存块被占用的时间片长度
 
 
     @Override

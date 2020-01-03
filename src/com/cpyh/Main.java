@@ -55,7 +55,7 @@ public class Main {
 		Scanner scanner3 = new Scanner(System.in);
 		int cnt=1;
 		while(true) {
-			System.out.println("请选择操作：\n\t1-数据生成线程\n\t2-执行线程\n\t3-数据删除线程\n\t4-查看磁盘数据\n\t5-切换用户");
+			System.out.println("请选择操作：\n\t1-数据生成线程\n\t2-执行线程\n\t3-数据删除线程\n\t4-查看磁盘数据\n\t5-切换用户\n\t6-删除用户");
 			System.out.printf(login.getNowUser()+"/>");
 			int operation=scanner0.nextInt();
 			switch (operation) {
@@ -122,6 +122,15 @@ public class Main {
 					}else{
 						login.changeUser(newUser,totalUser);
 					}
+					break;
+				case 6:
+					if(!login.getNowUser().equals("root")){
+						System.out.println("当前不是root用户，无权限使用此操作");
+						break;
+					}
+					System.out.println("请输入要删除的用户");
+					String User=scanner2.nextLine();
+					fileManager.deleteUser(login.getNowUser(),User,disks,totalFiles,totalUser,UserDiskTable);
 					break;
 				default:
 					System.out.println("\t无该选项，请重新输入");

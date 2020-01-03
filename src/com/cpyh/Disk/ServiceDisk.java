@@ -17,7 +17,6 @@ public class ServiceDisk {
             disks[i]=new Disk();
         }
         return disks;
-        //问题：如何用一个4KB的文件来保存磁盘信息？ 方案：建立一个文件保存和读取
     }
     /**
      *
@@ -26,6 +25,7 @@ public class ServiceDisk {
      * @param disks 磁盘数据应该设计成一个全局变量，直接在main函数里面去做，或者初始化
      * @return
      */
+    //获取磁盘数据
     public String getData(int startNum, int endNum, Disk []disks){//预计提供给读数据线程
         String str="";
         for(int i = startNum;i<=endNum;i++){
@@ -41,7 +41,8 @@ public class ServiceDisk {
         }
     }
 
-    //磁盘数据保存到txt文件，这一步要实现实时感觉有点困难。。要不直接在系统停止的时候一次性全写？
+    //这一步要实现实时感觉有点困难。。要不直接在系统停止的时候一次性全写？
+    //磁盘数据保存到txt文件
     public void strToTxt(Disk []disks){
         try {
             OutputStream out=new FileOutputStream("D:/OsDisk.txt",true);
